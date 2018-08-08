@@ -29,6 +29,14 @@ func (nl *NamedLocker) Unlock(name string) {
 	mut.(*sync.RWMutex).Unlock()
 }
 
+// UnlockAndDelete unlocks the named lock for write access
+// and removes it from memory, panics on non existence
+func (nl *NamedLocker) UnlockAndDelete(name string) {
+	mut, _ := nl.locks.Load(name)
+	nl.locks.Delete(name)
+	mut.(*sync.RWMutex).Unlock()
+}
+
 // RLock locks the named lock for read access
 func (nl *NamedLocker) RLock(name string) {
 	mut, _ := nl.locks.LoadOrStore(name, new(sync.RWMutex))

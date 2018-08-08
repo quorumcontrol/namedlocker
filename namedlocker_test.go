@@ -9,4 +9,8 @@ func TestMethods(t *testing.T) {
 	lock.RLock("test")
 	lock.RUnlock("test")
 	lock.Delete("test")
+
+	lock.Lock("test")
+	lock.UnlockAndDelete("test")
+
 }
